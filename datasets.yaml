@@ -2,3 +2,4 @@ datasets:
   - librilight
   - librilight@medium
   - librilight@large
+  - libriheavy

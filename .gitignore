@@ -1,2 +1,4 @@
 /external_datasets
+/encoded_datasets
 /.ipynb_checkpoints
+.env
