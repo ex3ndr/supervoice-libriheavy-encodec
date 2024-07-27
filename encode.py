@@ -53,14 +53,14 @@ def encode_parallel(args):
         codes = torch.cat([encoded[0] for encoded in encoded_frames], dim=-1).squeeze().cpu()
 
         # Save codecs
-        output_file = Path(output_dir) / Path(id).with_suffix(".pt")
+        output_file = Path(output_dir) / Path(id + ".pt")
         output_file.parent.mkdir(parents=True, exist_ok=True)
         if output_file.exists():        
             print("File exists", output_file)
         torch.save(codes, output_file)
         
         # Save text
-        output_file = Path(output_dir) / Path(id).with_suffix(".txt")
+        output_file = Path(output_dir) / Path(id + ".txt")
         if output_file.exists():        
             print("File exists", output_file)
         with open(output_file, "w") as f:
@@ -69,14 +69,19 @@ def encode_parallel(args):
 def execute_run():
 
     # Small
-    index_path = "./external_datasets/libriheavy/libriheavy_cuts_small.jsonl.gz"
-    files_path = "./external_datasets/librilight/"
-    output_path = "./encoded_datasets/librilight/"
+    # index_path = "./external_datasets/libriheavy/libriheavy_cuts_small.jsonl.gz"
+    # files_path = "./external_datasets/librilight/"
+    # output_path = "./encoded_datasets/librilight/"
+
+    # Medium
+    # index_path = "./external_datasets/libriheavy/libriheavy_cuts_medium.jsonl.gz"
+    # files_path = "./external_datasets/librilight-medium/"
+    # output_path = "./encoded_datasets/librilight-medium/"
 
     # Large
-    # index_path = "./external_datasets/libriheavy/libriheavy_cuts_large.jsonl.gz"
-    # files_path = "./external_datasets/librilight-large/"
-    # output_path = "./encoded_datasets/librilight-large/"
+    index_path = "./external_datasets/libriheavy/libriheavy_cuts_large.jsonl.gz"
+    files_path = "./external_datasets/librilight-large/"
+    output_path = "./encoded_datasets/librilight-large/"
 
     # Indexing files
     print("Build file index...")
@@ -110,10 +115,14 @@ def execute_run():
                 print("ID exists", id)
             existing_id[id] = True
 
+            # Check if exists
+            if (Path(output_path) / Path(id + ".pt")).exists():
+                continue
+
             # Load text
             text = cut["supervisions"][0]["custom"]["texts"][0]
             text = clean_text(text)
-            
+        
             # Find index
             if wav_id not in files_map:
                 files_map[wav_id] = len(files)
