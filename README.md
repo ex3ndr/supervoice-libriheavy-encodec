@@ -6,7 +6,7 @@ Compressed librlilight dataset with Encodec 6kbps.
 
 # Download
 
-This dataset can be download directly or using my [datsets](https://github/ex3ndr/datasets) tool:
+This dataset can be download directly or using my [datsets](https://github.com/ex3ndr/datasets) tool:
 
 ### Dataset ID
 
